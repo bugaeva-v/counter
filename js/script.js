@@ -33,7 +33,7 @@ phisycalActivities.addEventListener('change', (evt) => {
 });
 
 const weightFormula = () =>
-    (10 * weightForm.value) + (6.25 * heightForm.value) - (5 * ageForm.value);
+    Math.round(activityFactor * ((10 * weightForm.value) + (6.25 * heightForm.value) - (5 * ageForm.value) + (maleSwitch.checked ? 5 : -161)));
 
 inputFields.forEach(input => {
     input.addEventListener('change', () => {
@@ -44,11 +44,11 @@ inputFields.forEach(input => {
 
 submitButton.addEventListener('click', (evt) => {
     evt.preventDefault();
-    const calorieIntake = Math.ceil((weightFormula() + maleSwitch.checked ? 5 : -161) * activityFactor);
+    const calorieIntake = weightFormula();
     resultBlock.classList.remove('counter__result--hidden');
     caloriesNorm.textContent = calorieIntake;
-    caloriesMinimal.textContent = Math.ceil(calorieIntake * 0.85);
-    caloriesMaximal.textContent = Math.ceil(calorieIntake * 1.15);
+    caloriesMinimal.textContent = Math.round(calorieIntake * 0.85);
+    caloriesMaximal.textContent = Math.round(calorieIntake * 1.15);
 });
 
 resetButton.addEventListener('click', () => {
